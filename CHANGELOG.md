@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v0.1.1 - 2023-10-11
+#### Bug Fixes
+- Use named rust version - (b41996f) - Billie Thompson
+#### Continuous Integration
+- **(deps)** bump armakuni/github-actions from 0.16.2 to 0.16.3 - (dcb5200) - dependabot[bot]
+- Correct github output format - (d669a1b) - Billie Thompson
+- Correct warning about outputs - (7551e3e) - Billie Thompson
+#### Documentation
+- Format markdown file - (bab2be7) - Billie Thompson
+
+- - -
+
 ## v0.1.0 - 2023-10-11
 
 - - -
