@@ -40,6 +40,16 @@ jobs:
             cache-from: type=gha
             tags: ${{ steps.meta.outputs.tags }}
             labels: ${{ steps.meta.outputs.labels }}
+        - name: Test build to run
+          uses: docker/build-push-action@v5.0.0
+          with:
+            context: .
+            push: false
+            pull: true
+            load: true
+            cache-from: type=gha
+            tags: ${{ steps.meta.outputs.tags }}
+            labels: ${{ steps.meta.outputs.labels }}
         - name: Run docker image
           run: docker run --rm -it ghcr.io/purplebooth/utility-container-nop:latest
 
