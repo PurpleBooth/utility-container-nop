@@ -37,10 +37,10 @@ jobs:
               ${{ steps.docker.outputs.repository }}:latest
 
   check-conventional-commits:
-    uses: armakuni/github-actions/.github/workflows/check-conventional-commits.yml@v0.16.2
+    uses: armakuni/github-actions/.github/workflows/check-conventional-commits.yml@v0.16.3
 
   lint-pipeline:
-    uses: armakuni/github-actions/.github/workflows/lint-pipeline.yml@v0.16.2
+    uses: armakuni/github-actions/.github/workflows/lint-pipeline.yml@v0.16.3
 
 
   all-tests-succeeded:
@@ -73,7 +73,7 @@ jobs:
       - uses: taiki-e/cache-cargo-install-action@v1
         with:
           tool: cargo-edit
-      - uses: armakuni/github-actions/setup-cocogitto@v0.16.2
+      - uses: armakuni/github-actions/setup-cocogitto@v0.16.3
       - id: previous_version
         run: |
           cog get-version | tee .version
