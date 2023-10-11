@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v0.1.0 - 2023-10-11
+
+- - -
+
 ## v0.2.0 - 2023-10-10
 #### Bug Fixes
 - Set the frontend to be non-interactive - (2e60392) - Billie Thompson
