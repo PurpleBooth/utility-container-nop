@@ -1,4 +1,4 @@
-FROM rust as builder
+FROM rust:1.73.0 as builder
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
