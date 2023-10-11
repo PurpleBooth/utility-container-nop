@@ -50,7 +50,7 @@ jobs:
             tags: ${{ steps.meta.outputs.tags }}
             labels: ${{ steps.meta.outputs.labels }}
         - name: Run docker image
-          run: docker run --rm -it ghcr.io/purplebooth/utility-container-nop:latest
+          run: docker run --rm ghcr.io/purplebooth/utility-container-nop:latest
 
   check-conventional-commits:
     uses: armakuni/github-actions/.github/workflows/check-conventional-commits.yml@v0.16.3
