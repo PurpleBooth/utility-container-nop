@@ -29,7 +29,6 @@ jobs:
             pull: true
             platforms: linux/amd64,linux/arm64
             cache-from: |
-              type=registry,ref=$${{ steps.docker.outputs.repository }}:git-${{ github.sha }}
               type=registry,ref=${{ steps.docker.outputs.repository }}:latest
               type=registry,ref=${{ steps.docker.outputs.repository }}:cache
             tags: |-
@@ -133,7 +132,6 @@ jobs:
         platforms: linux/amd64,linux/arm64
         cache-to: type=registry,ref=${{ steps.docker.outputs.repository }}:cache,mode=max
         cache-from: |
-          type=registry,ref=${{ steps.docker.outputs.repository }}:git-${{ github.sha }}
           type=registry,ref=${{ steps.docker.outputs.repository }}:v${{ needs.release.outputs.current_version }}
           type=registry,ref=${{ steps.docker.outputs.repository }}:latest
           type=registry,ref=${{ steps.docker.outputs.repository }}:cache
