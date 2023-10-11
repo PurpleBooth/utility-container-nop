@@ -2,6 +2,27 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v0.2.0 - 2023-10-11
+#### Continuous Integration
+- Push does not need contents write - (8333b4f) - Billie Thompson
+- Correct semver image - (e07116a) - Billie Thompson
+- Remove Simluate tty as we don't have a TTY - (d6da90e) - Billie Thompson
+- Remove earlier load - (eab4046) - Billie Thompson
+- Switch back to single stage build for load - (5c3828a) - Billie Thompson
+- Add a really small test - (f58c1e9) - Billie Thompson
+- Remove version number - (834c250) - Billie Thompson
+- Use the metadata in the test step too - (121cbba) - Billie Thompson
+- Use metadata to tag images - (06691d1) - Billie Thompson
+- Copy and paste example from docker repo - (1f60946) - Billie Thompson
+- Set the github token - (0d5bd87) - Billie Thompson
+- Remove other reference to git level tags - (c5114d7) - Billie Thompson
+- Give write permissions to build - (3e6d15f) - Billie Thompson
+- Remove commit level images - (f8a4f3f) - Billie Thompson
+#### Features
+- Optimise binary for size - (eeab421) - Billie Thompson
+
+- - -
+
 ## v0.1.1 - 2023-10-11
 #### Bug Fixes
 - Use named rust version - (b41996f) - Billie Thompson
