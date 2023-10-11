@@ -96,7 +96,7 @@ jobs:
   docker-push:
     if: needs.release.outputs.version_bump
     permissions:
-      contents: read
+      contents: write
       packages: write
     runs-on: ubuntu-latest
     needs:
