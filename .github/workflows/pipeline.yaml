@@ -28,9 +28,7 @@ jobs:
             push: false
             pull: true
             platforms: linux/amd64,linux/arm64
-            cache-from: |
-              type=registry,ref=${{ steps.docker.outputs.repository }}:latest
-              type=registry,ref=${{ steps.docker.outputs.repository }}:cache
+            cache-from: type=gha
             tags: |-
               ${{ steps.docker.outputs.repository }}:git-${{ github.sha }}
               ${{ steps.docker.outputs.repository }}:latest
@@ -123,6 +121,15 @@ jobs:
       name: Turn repository name into docker registry name
       env:
         REPOSITORY: ${{ github.repository }}
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+      with:
+        images: ${{ steps.docker.outputs.repository }}
+        tags: |
+          type=raw,value=latest
+          type=semver,pattern=${{ needs.release.outputs.current_version }}
+          type=sha
     - name: Deploy build
       uses: docker/build-push-action@v5.0.0
       with:
@@ -131,11 +138,7 @@ jobs:
         pull: true
         platforms: linux/amd64,linux/arm64
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        cache-to: type=registry,ref=${{ steps.docker.outputs.repository }}:cache,mode=max
-        cache-from: |
-          type=registry,ref=${{ steps.docker.outputs.repository }}:v${{ needs.release.outputs.current_version }}
-          type=registry,ref=${{ steps.docker.outputs.repository }}:latest
-          type=registry,ref=${{ steps.docker.outputs.repository }}:cache
-        tags: |-
-          ${{ steps.docker.outputs.repository }}:latest
-          ${{ steps.docker.outputs.repository }}:v${{ needs.release.outputs.current_version }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
