@@ -130,6 +130,7 @@ jobs:
         push: true
         pull: true
         platforms: linux/amd64,linux/arm64
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         cache-to: type=registry,ref=${{ steps.docker.outputs.repository }}:cache,mode=max
         cache-from: |
           type=registry,ref=${{ steps.docker.outputs.repository }}:v${{ needs.release.outputs.current_version }}
