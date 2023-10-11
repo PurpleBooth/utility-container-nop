@@ -28,7 +28,6 @@ jobs:
             images: ${{ steps.docker.outputs.repository }}
             tags: |
               type=raw,value=latest
-              type=semver,pattern=${{ needs.release.outputs.current_version }}
               type=sha
         - name: Test build
           uses: docker/build-push-action@v5.0.0
