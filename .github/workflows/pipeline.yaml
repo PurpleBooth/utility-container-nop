@@ -1,0 +1,143 @@
+on:
+  push:
+  workflow_dispatch:
+  pull_request:
+
+name: Pipeline
+
+jobs:
+  docker-build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4.1.0
+          with:
+            submodules: recursive
+        - name: Set up QEMU
+          uses: docker/setup-qemu-action@v3.0.0
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v3.0.0
+        - run: echo ::set-output "name=repository::$( echo "ghcr.io/$REPOSITORY" | tr '[:upper:]' '[:lower:]')"
+          id: docker
+          env:
+            REPOSITORY: ${{ github.repository }}
+        - name: Test build
+          uses: docker/build-push-action@v5.0.0
+          with:
+            context: .
+            push: false
+            pull: true
+            platforms: linux/amd64,linux/arm64
+            cache-from: |
+              type=registry,ref=$${{ steps.docker.outputs.repository }}:git-${{ github.sha }}
+              type=registry,ref=${{ steps.docker.outputs.repository }}:latest
+              type=registry,ref=${{ steps.docker.outputs.repository }}:cache
+            tags: |-
+              ${{ steps.docker.outputs.repository }}:git-${{ github.sha }}
+              ${{ steps.docker.outputs.repository }}:latest
+
+  check-conventional-commits:
+    uses: armakuni/github-actions/.github/workflows/check-conventional-commits.yml@v0.16.2
+
+  lint-pipeline:
+    uses: armakuni/github-actions/.github/workflows/lint-pipeline.yml@v0.16.2
+
+
+  all-tests-succeeded:
+    needs:
+      - docker-build
+      - check-conventional-commits
+      - lint-pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - run: "true"
+        shell: bash
+
+  release:
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    needs:
+      - all-tests-succeeded
+    outputs:
+      version_bump: ${{ steps.current_version.outputs.current_version != steps.previous_version.outputs.previous_version }}
+      current_version: ${{ steps.current_version.outputs.current_version }}
+      previous_version: ${{ steps.previous_version.outputs.previous_version }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+      - name: Get tags
+        run: git fetch --tags origin
+      - uses: taiki-e/cache-cargo-install-action@v1
+        with:
+          tool: cargo-edit
+      - uses: armakuni/github-actions/setup-cocogitto@v0.16.2
+      - id: previous_version
+        run: |
+          cog get-version | tee .version
+          echo "previous_version=$( cat .version )"  >> "$GITHUB_OUTPUT"
+          rm .version
+        shell: bash
+      - name: Semver release
+        id: release
+        run: |
+          git config --global user.name "cog-bot"
+          git config --global user.email "cog@example.com"
+          cog bump --auto
+      - id: current_version
+        run: |
+          cog get-version | tee .version
+          echo "current_version=$( cat .version )"  >> "$GITHUB_OUTPUT"
+          rm .version
+        shell: bash
+
+
+  docker-push:
+    if: needs.release.outputs.version_bump
+    permissions:
+      contents: read
+      packages: write
+    runs-on: ubuntu-latest
+    needs:
+      - release
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4.1.0
+      with:
+        lfs: true
+        ref: v${{ needs.release.outputs.current_version }}
+        submodules: recursive
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3.0.0
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3.0.0
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3.0.0
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ github.token }}
+    - run: echo ::set-output "name=repository::$( echo "ghcr.io/$REPOSITORY" | tr '[:upper:]' '[:lower:]')"
+      id: docker
+      name: Turn repository name into docker registry name
+      env:
+        REPOSITORY: ${{ github.repository }}
+    - name: Deploy build
+      uses: docker/build-push-action@v5.0.0
+      with:
+        context: .
+        push: true
+        pull: true
+        platforms: linux/amd64,linux/arm64
+        cache-to: type=registry,ref=${{ steps.docker.outputs.repository }}:cache,mode=max
+        cache-from: |
+          type=registry,ref=${{ steps.docker.outputs.repository }}:git-${{ github.sha }}
+          type=registry,ref=${{ steps.docker.outputs.repository }}:v${{ needs.release.outputs.current_version }}
+          type=registry,ref=${{ steps.docker.outputs.repository }}:latest
+          type=registry,ref=${{ steps.docker.outputs.repository }}:cache
+        tags: |-
+          ${{ steps.docker.outputs.repository }}:git-${{ github.sha }}
+          ${{ steps.docker.outputs.repository }}:latest
+          ${{ steps.docker.outputs.repository }}:v${{ needs.release.outputs.current_version }}

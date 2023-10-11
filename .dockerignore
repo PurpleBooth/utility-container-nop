@@ -1,0 +1,7 @@
+/.github
+/.idea
+/target
+/.*
+/cog.toml
+/LICENSE
+/*.md
