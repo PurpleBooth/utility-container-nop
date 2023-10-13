@@ -53,10 +53,10 @@ jobs:
           run: docker run --rm ghcr.io/purplebooth/utility-container-nop:latest
 
   check-conventional-commits:
-    uses: armakuni/github-actions/.github/workflows/check-conventional-commits.yml@v0.16.4
+    uses: armakuni/github-actions/.github/workflows/check-conventional-commits.yml@v0.16.5
 
   lint-pipeline:
-    uses: armakuni/github-actions/.github/workflows/lint-pipeline.yml@v0.16.4
+    uses: armakuni/github-actions/.github/workflows/lint-pipeline.yml@v0.16.5
 
 
   all-tests-succeeded:
@@ -89,7 +89,7 @@ jobs:
       - uses: taiki-e/cache-cargo-install-action@v1
         with:
           tool: cargo-edit
-      - uses: armakuni/github-actions/setup-cocogitto@v0.16.4
+      - uses: armakuni/github-actions/setup-cocogitto@v0.16.5
       - id: previous_version
         run: |
           cog get-version | tee .version
