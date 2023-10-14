@@ -125,6 +125,8 @@ jobs:
         lfs: true
         ref: v${{ needs.release.outputs.current_version }}
         submodules: recursive
+    - name: Install Cosign
+      uses: sigstore/cosign-installer@v3.1.1
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3.0.0
     - name: Set up Docker Buildx
@@ -151,6 +153,7 @@ jobs:
           type=sha
     - name: Deploy build
       uses: docker/build-push-action@v5.0.0
+      id: build-and-push
       with:
         context: .
         push: true
@@ -161,3 +164,8 @@ jobs:
         cache-to: type=gha,mode=max
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+    - name: Sign the images with GitHub OIDC Token
+      env:
+        REPO: ${{ steps.docker.outputs.repository }}
+        DIGEST: ${{ steps.build-and-push.outputs.digest }}
+      run: cosign sign --yes "$REPO@$DIGEST"
