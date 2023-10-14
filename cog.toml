@@ -8,10 +8,7 @@ post_bump_hooks = [
     "git push origin v{{version}}",
 ]
 
-pre_bump_hooks = [
-    "cargo set-version --workspace {{version}}",
-    "cargo build --release",
-]
+pre_bump_hooks = []
 
 [git_hooks]
 
