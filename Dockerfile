@@ -1,10 +1,11 @@
 FROM ubuntu as builder
 ARG TARGETPLATFORM
 
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    nasm \
-    bash \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update \
+    && apt-get install -y \
+      build-essential \
+      nasm \
+      bash \
     && rm -rf /var/lib/apt/lists/*
 
 SHELL ["/usr/bin/env", "bash", "-c"]
@@ -17,6 +18,7 @@ RUN case "$TARGETPLATFORM" in "linux/amd64") nasm -felf64 ../src/nop_amd64.asm -
 
 RUN ld nop.o -o nop
 WORKDIR /usr/src/app
+RUN ./target/nop
 FROM scratch
 
 COPY --from=builder /usr/src/app/target/nop /nop
