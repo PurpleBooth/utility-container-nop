@@ -86,9 +86,6 @@ jobs:
           fetch-depth: 0
       - name: Get tags
         run: git fetch --tags origin
-      - uses: taiki-e/cache-cargo-install-action@v1
-        with:
-          tool: cargo-edit
       - uses: armakuni/github-actions/setup-cocogitto@v0.16.5
       - id: previous_version
         run: |
