@@ -2,6 +2,21 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v0.3.0 - 2023-10-14
+#### Bug Fixes
+- Make sure we set debian frontend - (96b80fb) - Billie Thompson
+#### Build system
+- Remove the rust stuff from the release step - (3cb969c) - Billie Thompson
+- Remove repeated build step - (a664b0d) - Billie Thompson
+#### Continuous Integration
+- **(deps)** bump armakuni/github-actions from 0.16.4 to 0.16.5 - (c4f3cb7) - dependabot[bot]
+- **(deps)** bump docker/metadata-action - (93b1bca) - dependabot[bot]
+- **(deps)** bump armakuni/github-actions from 0.16.3 to 0.16.4 - (3356c6d) - dependabot[bot]
+#### Features
+- Make the image even smaller - (cab7d34) - Billie Thompson
+
+- - -
+
 ## v0.2.0 - 2023-10-11
 #### Continuous Integration
 - Push does not need contents write - (8333b4f) - Billie Thompson
