@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v0.3.1 - 2023-10-15
+#### Bug Fixes
+- we aren't clearing the exit code arg so it might return with a non-0 exit code on arm systems - (734d9f3) - Billie Thompson
+#### Continuous Integration
+- **(deps)** bump armakuni/github-actions from 0.16.5 to 0.16.6 - (f8573e2) - dependabot[bot]
+- **(deps)** bump sigstore/cosign-installer from 3.1.1 to 3.1.2 - (164f63b) - dependabot[bot]
+- Remove unused tool - (632b701) - Billie Thompson
+- Add oidc token for signing - (5fc5493) - Billie Thompson
+- Try signing docker images - (d1afce6) - Billie Thompson
+#### Refactoring
+- remove need for Nasm - (9613e66) - Billie Thompson
+
+- - -
+
 ## v0.3.0 - 2023-10-14
 #### Bug Fixes
 - Make sure we set debian frontend - (96b80fb) - Billie Thompson
