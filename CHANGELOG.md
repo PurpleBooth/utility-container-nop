@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v0.4.0 - 2023-10-15
+#### Features
+- Run as non root - (98a0031) - Billie Thompson
+
+- - -
+
 ## v0.3.1 - 2023-10-15
 #### Bug Fixes
 - we aren't clearing the exit code arg so it might return with a non-0 exit code on arm systems - (734d9f3) - Billie Thompson
