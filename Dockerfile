@@ -21,4 +21,5 @@ RUN ./target/nop
 FROM scratch
 
 COPY --from=builder /usr/src/app/target/nop /nop
+USER 1000:1000
 ENTRYPOINT ["/nop"]
