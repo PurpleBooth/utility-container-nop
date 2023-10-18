@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v0.5.0 - 2023-10-18
+#### Continuous Integration
+- **(deps)** bump armakuni/github-actions from 0.16.7 to 0.16.8 - (f8a408e) - dependabot[bot]
+- **(deps)** bump actions/checkout from 4.1.0 to 4.1.1 - (fbc75da) - dependabot[bot]
+- **(deps)** bump armakuni/github-actions from 0.16.6 to 0.16.7 - (2150ebb) - dependabot[bot]
+#### Documentation
+- add some notes in the readme - (23afd9c) - Billie Thompson
+#### Features
+- Remove debug symbols and page alignment - (6915d77) - Billie Thompson
+
+- - -
+
 ## v0.4.0 - 2023-10-15
 #### Features
 - Run as non root - (98a0031) - Billie Thompson
