@@ -53,10 +53,10 @@ jobs:
           run: docker run --rm ghcr.io/purplebooth/utility-container-nop:latest
 
   check-conventional-commits:
-    uses: armakuni/github-actions/.github/workflows/check-conventional-commits.yml@v0.16.7
+    uses: armakuni/github-actions/.github/workflows/check-conventional-commits.yml@v0.16.8
 
   lint-pipeline:
-    uses: armakuni/github-actions/.github/workflows/lint-pipeline.yml@v0.16.7
+    uses: armakuni/github-actions/.github/workflows/lint-pipeline.yml@v0.16.8
 
 
   all-tests-succeeded:
@@ -86,7 +86,7 @@ jobs:
           fetch-depth: 0
       - name: Get tags
         run: git fetch --tags origin
-      - uses: armakuni/github-actions/setup-cocogitto@v0.16.7
+      - uses: armakuni/github-actions/setup-cocogitto@v0.16.8
       - id: previous_version
         run: |
           cog get-version | tee .version
