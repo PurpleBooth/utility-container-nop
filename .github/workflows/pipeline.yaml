@@ -156,12 +156,15 @@ jobs:
         context: .
         push: true
         pull: true
+        sbom: true
+        provenance: mode=max
         platforms: linux/amd64,linux/arm64
         github-token: ${{ secrets.GITHUB_TOKEN }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+        outputs: type=registry,oci-mediatypes=true,compression=estargz,force-compression=true
     - name: Sign the images with GitHub OIDC Token
       env:
         REPO: ${{ steps.docker.outputs.repository }}
