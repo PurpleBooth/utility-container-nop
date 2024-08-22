@@ -1,4 +1,4 @@
-FROM ubuntu@sha256:8a37d68f4f73ebf3d4efafbcf66379bf3728902a8038616808f04e34a9ab63ee as builder
+FROM ubuntu@sha256:8a37d68f4f73ebf3d4efafbcf66379bf3728902a8038616808f04e34a9ab63ee AS builder
 ARG TARGETPLATFORM
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
